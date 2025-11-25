@@ -4,5 +4,9 @@
   "scripts": {
     "build": "npm ci --prefix backend && npm ci --prefix frontend && cd backend && npx prisma generate && npx prisma migrate deploy && npx prisma db seed",
     "start": "sh -c \"cd backend && npm run start & cd frontend && npm run dev\""
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "tailwindcss": "^4.0.0"
   }
 }
