@@ -1,0 +1,8 @@
+{
+  "name": "obralog-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "npm ci --prefix backend && npm ci --prefix frontend && cd backend && npx prisma db migrate deploy && npx prisma db seed",
+    "start": "sh -c \"cd backend && npm run start & cd frontend && npm run dev\""
+  }
+}
