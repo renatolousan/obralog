@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "node",
+  "steps": {
+    "backend": {
+      "inputs": [
+        {
+          "local": true,
+          "include": ["backend"]
+        }
+      ],
+      "commands": [
+        { "cmd": "cd backend && npm ci" },
+        { "cmd": "cd backend && npx prisma db migrate deploy" },
+        { "cmd": "cd backend && npx prisma db seed" }
+      ],
+      "deployOutputs": [
+        {
+          "include": [
+            "backend",
+            "backend/node_modules"
+          ]
+        }
+      ]
+    },
+    "frontend": {
+      "inputs": [
+        {
+          "local": true,
+          "include": ["frontend"]
+        }
+      ],
+      "commands": [
+        { "cmd": "cd frontend && npm ci" }
+      ],
+      "deployOutputs": [
+        {
+          "include": [
+            "frontend",
+            "frontend/node_modules"
+          ]
+        }
+      ]
+    }
+  },
+  "deploy": {
+    "inputs": [
+      { "step": "backend" },
+      { "step": "frontend" }
+    ],
+    "startCommand": "sh -c \"cd backend && npm run start & cd frontend && npm run dev\""
+  }
+}
