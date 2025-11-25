@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  AGUARDANDO_1_ACESSO
+  ATIVO
+}
+
+model Development {
+  id            String     @id @default(uuid()) @db.Char(40)
+  name          String     @unique
+  description   String     @db.VarChar(500)
+  address       String     @unique @db.VarChar(100)
+  riskThreshold Decimal?   @default(50) @db.Decimal(5, 2)
+  createdBy     User       @relation(fields: [userId], references: [id])
+  buildings     Building[]
+  userId        String     @db.Char(40)
+}
+
+model Building {
+  id             String      @id @default(uuid()) @db.Char(40)
+  name           String
+  id_development String
+  development    Development @relation(fields: [id_development], references: [id])
+  units          Unit[]
+}
+
+model Unit {
+  id          String   @id @default(uuid()) @db.Char(40)
+  name        String   @db.VarChar(100)
+  created_at  DateTime @default(now()) @db.Timestamp
+  floor       Int
+  number      Int
+  id_building String
+  torre       Building @relation(fields: [id_building], references: [id])
+  users       User[]
+  items       Item[]
+}
+
+model UserType {
+  id        String   @id @db.Char(40)
+  label     String   @db.VarChar(8)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  users     User[]
+}
+
+model User {
+  id           String        @id @default(uuid()) @db.Char(40)
+  name         String        @db.VarChar(100)
+  phone        String        @db.VarChar(20)
+  cpf          String        @unique @db.Char(14)
+  email        String        @unique @db.VarChar(100)
+  password     String        @db.VarChar(100)
+  created_at   DateTime      @default(now()) @db.Timestamp
+  unitId       String?       @db.Char(40)
+  unit         Unit?         @relation(fields: [unitId], references: [id])
+  status       UserStatus    @default(AGUARDANDO_1_ACESSO)
+  feedbacks    Feedback[]
+  developments Development[]
+  userType     String        @db.Char(40)
+  userTypeId   UserType      @relation(fields: [userType], references: [id])
+}
+
+model Installer {
+  id              String  @id @default(uuid()) @db.Char(40)
+  name            String
+  cpf             String  @unique
+  phone           String  @db.VarChar(20)
+  installed_items Item[]  @relation("ItemInstaller")
+  visits          Visit[] @relation("visit_installer")
+  feedbacks       Feedback[] @relation("FeedbackInstaller")
+  visitId         String? @db.Char(40)
+}
+
+model Item {
+  id            String      @id @default(uuid()) @db.Char(40)
+  name          String      @db.VarChar(50)
+  description   String      @db.VarChar(200)
+  value         Decimal?    @db.Decimal(10, 2)
+  batch         String?     @db.VarChar(50)
+  warranty      Int?        @db.Int // meses de garantia
+  id_unit       String
+  cnpj_supplier String
+  installers    Installer[] @relation("ItemInstaller")
+  feedbacks     Feedback[]
+  unit          Unit        @relation(fields: [id_unit], references: [id])
+  supplier      Supplier    @relation(fields: [cnpj_supplier], references: [cnpj])
+}
+
+model Supplier {
+  cnpj           String @id @db.Char(20)
+  name           String @db.VarChar(50)
+  supplied_items Item[]
+}
+
+enum FeedbackStatus {
+  ABERTO
+  EM_ANALISE
+  VISITA_AGENDADA
+  AGUARDANDO_FEEDBACK
+  FECHADO
+}
+
+model Feedback {
+  id              String         @id @default(uuid()) @db.Char(40)
+  issue           String         @db.VarChar(20)
+  description     String         @db.VarChar(1000)
+  status          FeedbackStatus @default(ABERTO)
+  created_at      DateTime       @default(now()) @db.Timestamp
+  repairCost      Decimal?       @db.Decimal(10, 2)
+  id_installer    String?        @db.Char(40)
+  completedAt     DateTime?      @db.Timestamp
+  id_user         String
+  id_item         String
+  user            User           @relation(fields: [id_user], references: [id])
+  item            Item           @relation(fields: [id_item], references: [id])
+  installer       Installer?     @relation("FeedbackInstaller", fields: [id_installer], references: [id])
+  attachments     Attachment[]
+  scheduled_visit Visit?
+  user_like       Boolean        @default(false)
+  user_comment    String?        @db.VarChar(500)
+}
+
+model Attachment {
+  id            String   @id @default(uuid()) @db.Char(40)
+  original_name String   @db.VarChar(255)
+  file_name     String   @db.VarChar(255)
+  path          String   @db.VarChar(255)
+  mime_type     String   @db.VarChar(100)
+  size          BigInt
+  created_at    DateTime @default(now()) @db.Timestamp
+  feedback_id   String
+  feedback      Feedback @relation(fields: [feedback_id], references: [id], onDelete: Cascade)
+}
+
+model Visit {
+  id              String      @id @default(uuid()) @db.Char(40)
+  date            DateTime    @db.Timestamp
+  duration        Int         @default(60) @db.Int // minutos
+  foremen         Installer[] @relation("visit_installer")
+  confirmed       Boolean     @default(false)
+  feedback_id     String      @unique @db.VarChar(40)
+  relatedFeedback Feedback    @relation(fields: [feedback_id], references: [id])
+}

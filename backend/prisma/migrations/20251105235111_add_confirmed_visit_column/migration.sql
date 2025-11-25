@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Visit` ADD COLUMN `confirmed` BOOLEAN NOT NULL DEFAULT false,
+    MODIFY `date` TIMESTAMP NOT NULL;

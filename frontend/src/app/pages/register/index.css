@@ -1,0 +1,201 @@
+:root {
+  --bg: #0f1220;
+  --panel: #171a2b;
+  --panel-2: #14172a;
+  --text: #e7e9ee;
+  --muted: #9aa3b2;
+  --brand: #7c96ff;
+  --accent: #98e7c1;
+  --danger: #ff7b7b;
+  --primary: #6ea8fe;
+  --border: #2b304a;
+  --border-focus: #3b4270;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  --radius: 10px;
+}
+
+/* ===== Fundo principal ===== */
+.bgCustom {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 20px;
+}
+
+/* ===== Container do formulário ===== */
+.form {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 32px;
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+}
+
+/* ===== Títulos ===== */
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+h2,
+.h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+/* ===== Textos de apoio ===== */
+p,
+label,
+.hint {
+  color: var(--muted);
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+/* ===== Estrutura dos campos ===== */
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Inputs e selects ===== */
+.input,
+.select {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+  border: 1px solid var(--border-focus);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 150, 255, 0.3);
+}
+
+/* ===== Erros ===== */
+.error {
+  border-color: var(--danger);
+}
+
+.helpError {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ===== Cards internos ===== */
+.card {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* ===== Botões ===== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btnPrimary {
+  background: var(--brand);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btnPrimary:hover {
+  background: #9aaeff;
+}
+
+.btnPrimaryDisabled {
+  background: #555b7a;
+  cursor: not-allowed;
+}
+
+.btnGhost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btnGhost:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== Alertas ===== */
+.alertError {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.alertSuccess {
+  background: rgba(50, 205, 50, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+/* ===== Dica final ===== */
+.hint {
+  font-size: 0.8rem;
+  text-align: right;
+  color: var(--muted);
+}
+
+/* ===== Select personalizado ===== */
+select option {
+  background: var(--panel-2);
+  color: var(--text);
+}

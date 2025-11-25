@@ -1,0 +1,16 @@
+# next-app/Dockerfile.dev
+FROM node:20-alpine
+
+ENV TZ=America/Manaus \
+    NEXT_TELEMETRY_DISABLED=1
+
+WORKDIR /app
+
+# instala deps com cache de layer
+COPY package*.json ./
+RUN npm ci
+
+# código virá por volume
+EXPOSE 3000
+# importante ouvir em 0.0.0.0 no container
+CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0"]
