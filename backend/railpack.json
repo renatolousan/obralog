@@ -1,0 +1,19 @@
+{
+    "$schema": "https://schema.railpack.com/railpack.schema.json",
+    "steps": {
+        "install": {
+            "commands": [
+                "npm ci"
+            ]
+        },
+        "build": {
+            "commands": [
+                "npx prisma generate",
+                "npm run build"
+            ]
+        }
+    },
+    "deploy": {
+        "startCommand": "npx prisma db migrate deploy && npx prisma db seed && node build/index.js"
+    }
+}
