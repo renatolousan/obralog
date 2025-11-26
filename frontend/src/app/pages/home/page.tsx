@@ -169,7 +169,7 @@ export default function HomePage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1220] via-[#171a2b] to-[#0f1220] text-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#3739a2] to-[#1a1b4b] text-slate-100">
       <Navbar onToggleSidebar={() => setSidebarOpen((v) => !v)} />
 
       <div

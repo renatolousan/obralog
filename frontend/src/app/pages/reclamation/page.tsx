@@ -5,7 +5,7 @@ import { useItems } from "./hooks/useItems";
 import { useAttachments } from "./hooks/useAttachments";
 import { useReclamacaoForm } from "./hooks/useReclamacaoForm";
 import { useAISuggestion } from "./hooks/useAISuggestion";
-import { Navbar } from "./components/Navbar";
+import { Navbar } from "./components/Navbar"; 
 import { PageHeader } from "./components/PageHeader";
 import { ReclamacaoFormComponent } from "./components/ReclamacaoForm";
 
@@ -65,7 +65,8 @@ export default function ComplaintPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1220] via-[#171a2b] to-[#0f1220] text-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#3739a2] to-[#1a1b4b] text-slate-100">
+      
       <Navbar />
 
       <div className="grid gap-4 p-4">

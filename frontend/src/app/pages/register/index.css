@@ -16,7 +16,7 @@
 
 /* ===== Fundo principal ===== */
 .bgCustom {
-  background: var(--bg);
+  background: linear-gradient(to bottom right, #3739a2, #1a1b4b);
   color: var(--text);
   min-height: 100vh;
   display: flex;
@@ -148,11 +148,11 @@ label,
 }
 
 .btnPrimary:hover {
-  background: #9aaeff;
+  background: #3739a2;
 }
 
 .btnPrimaryDisabled {
-  background: #555b7a;
+  background: #3a457a;
   cursor: not-allowed;
 }
 

@@ -26,7 +26,7 @@ function ChangePasswordContent() {
   } = useChangePassword();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f1326] to-[#1a1f3b] p-4 sm:p-5">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3739a2] to-[#1a1b4b] p-4 sm:p-5">
       <AnimationStyles />
       <div className="bg-slate-900/85 border border-white/10 p-6 sm:p-10 rounded-2xl shadow-xl backdrop-blur-md w-full max-w-[500px] animate-fade-in animate-slide-down">
         {isFirstAccess && <FirstAccessBanner />}
@@ -64,7 +64,7 @@ export default function ChangePasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f1326] to-[#1a1f3b] p-4 sm:p-5">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3739a2] to-[#1a1b4b] p-4 sm:p-5">
           <div className="bg-slate-900/85 border border-white/10 p-6 sm:p-10 rounded-2xl shadow-xl backdrop-blur-md w-full max-w-[500px]">
             <div className="text-center p-8">
               <p className="text-slate-100">Carregando...</p>

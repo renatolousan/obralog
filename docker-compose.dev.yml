@@ -1,0 +1,71 @@
+
+# para testar localmente (basicamente so nao pega os containers do meu usuário no dockerhub)
+services:
+  db:
+    image: mysql:8.0
+    container_name: obralog-db
+    restart: always
+    networks:
+      - network-obralog
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: obralog-phpmyadmin
+    restart: always
+    networks:
+      - network-obralog
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  backend:
+    build: ./backend
+    container_name: obralog-backend
+    restart: always
+    networks:
+      - network-obralog
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}
+      PORT: 3000
+      UPLOAD_MAX_FILE_SIZE: ${UPLOAD_MAX_FILE_SIZE}
+      EMAIL_ACCOUNT: ${EMAIL_ACCOUNT}
+      EMAIL_PASS: ${EMAIL_PASS}
+      SESSION_SECRET: ${SESSION_SECRET}
+      CORS_ALLOWED_ORIGIN: ${CORS_ALLOWED_ORIGIN}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: obralog-frontend
+    restart: always
+    networks:
+      - network-obralog
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: http://backend:3000
+    ports:
+      - "4000:3000"
+    depends_on:
+      - backend
+
+networks:
+  network-obralog:
+
+volumes:
+  db_data:

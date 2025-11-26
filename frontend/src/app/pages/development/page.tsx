@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image"; // <--- Import adicionado
 import { NewDevelopmentModal } from "./newDevelopment";
 import { ReportsModal } from "./reportsModal";
 import { DevelopmentsTable } from "./developmentTable";
@@ -14,27 +15,46 @@ export default function DevelopmentsPage() {
   const [openReports, setOpenReports] = useState(false);
 
   return (
-    <>
-      <button
-        className=" m-10 w-25 absolute h-9 px-3.5 rounded-lg border border-red-900/50 bg-red-950/50 text-red-200 hover:bg-red-900/30 transition-colors font-medium"
-        type="button"
-        onClick={() => router.push("/pages/auth")}
-      >
-        Sair
-      </button>
+    <div className="min-h-screen bg-gradient-to-br from-[#3739a2] to-[#1a1b4b]">
+      
+      <nav className="sticky top-0 z-50 flex items-center justify-between bg-[#3739a2] border-b border-white/10 px-6 py-4 shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+            <Image
+              src="/uploads/auth/logo.png"
+              alt="Logo Obralog"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-semibold text-white m-0">
+            Obralog
+          </h1>
+        </div>
+
+        <button
+          className="px-4 py-2 rounded-lg border border-red-400/30 bg-red-500/10 text-red-100 hover:bg-red-500/20 transition-colors font-medium text-sm"
+          type="button"
+          onClick={() => router.push("/pages/auth")}
+        >
+          Sair
+        </button>
+      </nav>
+
       <main className="mx-auto max-w-6xl px-4 py-8">
         <header className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Empreendimentos</h1>
+          <h1 className="text-2xl font-semibold text-white">Empreendimentos</h1>
+          
           <div className="flex items-center gap-2">
             <button
               onClick={() => router.push("/pages/dashboard/managerial")}
-              className="inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 transition-colors"
             >
               Dashboard Gerencial
             </button>
             <button
               onClick={() => setOpenReports(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-slate-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 transition-colors border border-slate-500"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -53,7 +73,7 @@ export default function DevelopmentsPage() {
             </button>
             <button
               onClick={() => setOpen(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 transition-colors"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -73,29 +93,21 @@ export default function DevelopmentsPage() {
           </div>
         </header>
 
-        {/* tua tabela existente */}
         <DevelopmentsTable data={data} total={total} />
 
-        {/* o modal */}
         <NewDevelopmentModal
           open={open}
           onClose={() => setOpen(false)}
           onCreated={() => {
-            // opção simples:
             window.location.reload();
-
-            // ou melhor (sem reload):
-            // await refetch();
-            // setOpen(false);
           }}
         />
 
-        {/* modal de relatórios */}
         <ReportsModal
           open={openReports}
           onClose={() => setOpenReports(false)}
         />
       </main>
-    </>
+    </div>
   );
 }

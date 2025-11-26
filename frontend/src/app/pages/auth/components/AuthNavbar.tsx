@@ -1,5 +1,5 @@
 import type { Mode } from "../utils/schemas";
-import Image from "next/image"; // 1. Importar o componente Image
+import Image from "next/image"; 
 
 interface AuthNavbarProps {
   mode: Mode;
@@ -16,10 +16,8 @@ export function AuthNavbar({ mode, onModeChange, onReset }: AuthNavbarProps) {
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between bg-[#3739a2] border-b border-white/10 px-4 py-3 sm:px-6 sm:py-4">
       
-      {/* 2. Criei essa DIV para agrupar a Logo e o Texto lado a lado */}
       <div className="flex items-center gap-3">
         
-        {/* A LOGO AQUI */}
         <div className="relative w-8 h-8 sm:w-10 sm:h-10 "> 
           <Image 
             src="/uploads/auth/logo.png" 
@@ -34,7 +32,6 @@ export function AuthNavbar({ mode, onModeChange, onReset }: AuthNavbarProps) {
         </h1>
       </div>
 
-      {/* Botões de Login/Cadastro (mantive igual) */}
       <div className="flex gap-2 sm:gap-3">
         <button
           type="button"
